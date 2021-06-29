@@ -1,11 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    TouchableHighlight,
+} from 'react-native';
 
 const GoalItem = (props) => {
     return (
-        <View style={styles.listItem}>
-            <Text>{props.title}</Text>
-        </View>
+        <TouchableHighlight
+            underlayColor="#21b786"
+            onPress={props.onDelete.bind(this, props.id)}
+        >
+            <View style={styles.listItem}>
+                <Text>{props.title}</Text>
+            </View>
+        </TouchableHighlight>
     );
 };
 
