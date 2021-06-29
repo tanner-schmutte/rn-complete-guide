@@ -9,48 +9,29 @@ import {
     FlatList,
 } from 'react-native';
 
+import GoalInput from './components/GoalInput';
+import GoalItem from './components/GoalItem';
+
 export default function App() {
-    const [enteredGoal, setEnteredGoal] = useState('');
     const [courseGoals, setCourseGoals] = useState([]);
 
-    const goalInputHandler = (enteredText) => {
-        setEnteredGoal(enteredText);
-    };
-
-    const addGoalHandler = () => {
+    const addGoalHandler = (goalTitle) => {
         setCourseGoals((currentGoals) => [
             ...currentGoals,
-            { key: Math.random().toString(), value: enteredGoal },
+            { id: Math.random().toString(), value: goalTitle },
         ]);
     };
 
     return (
         <View style={styles.container}>
-            <View
-                style={{
-                    flexDirection: 'row',
-                }}
-            >
-                <TextInput
-                    placeholder="Course Goals"
-                    style={{
-                        borderBottomColor: 'black',
-                        borderBottomWidth: 1,
-                    }}
-                    onChangeText={goalInputHandler}
-                    value={enteredGoal}
-                />
-                <Button title="ADD" onPress={addGoalHandler} />
-            </View>
+            <GoalInput onAddGoal={addGoalHandler} />
             <FlatList
                 keyExtractor={(item, index) => item.id}
                 data={courseGoals}
                 renderItem={(itemData) => (
-                    <View style={styles.listItem}>
-                        <Text>{itemData.item.value}</Text>
-                    </View>
+                    <GoalItem title={itemData.item.value} />
                 )}
-            ></FlatList>
+            />
         </View>
     );
 }
@@ -62,9 +43,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         // justifyContent: 'center',
         paddingTop: 50,
-    },
-    listItem: {
-        padding: 5,
-        margin: 5,
     },
 });
